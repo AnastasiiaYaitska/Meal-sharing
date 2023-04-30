@@ -56,6 +56,7 @@ app.get("/:type", async (req, res) => {
     ) {
       return res.status(404).send("Meal Not Found!");
     }
+    return res.json(resultOfQuery[0]);
   } catch (error) {
     res.status(500).send(err);
   }
