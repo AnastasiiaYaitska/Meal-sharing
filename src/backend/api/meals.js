@@ -1,8 +1,8 @@
 const express = require("express");
-const router = express.Router();
+const routerMeals = express.Router();
 const knex = require("../database");
 
-router.get("/", async (req, res) => {
+routerMeals.get("/", async (req, res) => {
   try {
     const allMeals = await knex("Meal").select("*");
     if (!allMeals.length) {
@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:Id", async (req, res) => {
+routerMeals.get("/:Id", async (req, res) => {
   try {
     const Id = parseInt(req.params.Id);
     const mealId = await knex("Meal").select("*").where("Id", "=", Id);
@@ -31,7 +31,7 @@ router.get("/:Id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+routerMeals.post("/", async (req, res) => {
   try {
     await knex("Meal").insert(req.body);
     res.status(201).json({ message: "Look Mum, I made a thing" });
@@ -42,7 +42,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:Id", async (req, res) => {
+routerMeals.put("/:Id", async (req, res) => {
   try {
     const Id = parseInt(req.params.Id);
     const mealId = await knex("Meal").where({ Id: Id }).update(req.body);
@@ -56,11 +56,11 @@ router.put("/:Id", async (req, res) => {
   }
 });
 
-router.delete("/:Id", async (request, response) => {
+routerMeals.delete("/:Id", async (req, res) => {
   try {
-    const Id = parseInt(request.params.Id);
+    const Id = parseInt(req.params.Id);
     await knex("Meal").where({ Id: Id }).del();
-    response.status(200).json({ message: "This shit deleted" });
+    res.status(200).json({ message: "This shit deleted" });
   } catch (error) {
     res.status(500).json({
       error: "Error while deleting the meal",
@@ -68,4 +68,4 @@ router.delete("/:Id", async (request, response) => {
   }
 });
 
-module.exports = router;
+module.exports = routerMeals;

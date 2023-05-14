@@ -5,8 +5,8 @@ const router = express.Router();
 
 const path = require("path");
 const knex = require("./database");
-const mealsRouter = require("./api/meals");
-// const reservationsRouter = require("./api/reservations");
+const routerMeals = require("./api/meals");
+const routerReservation = require("./api/reservations");
 const buildPath = path.join(__dirname, "../../dist");
 const port = process.env.PORT || 3000;
 const cors = require("cors");
@@ -22,7 +22,8 @@ app.use(express.json());
 
 app.use(cors());
 
-router.use("/meals", mealsRouter);
+router.use("/meals", routerMeals);
+router.use("/reservations", routerReservation);
 
 ///
 // router.use("/reservations", reservationsRouter);
