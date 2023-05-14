@@ -7,7 +7,6 @@ function App() {
   return (
     <Router>
       <Route exact path="/all-meals">
-        <p>test</p>
         <MealsList />
       </Route>
       <Route exact path="/lol">
