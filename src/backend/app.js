@@ -68,11 +68,13 @@ router.get("/:type", cors(), async (req, res) => {
   }
 });
 
-if (process.env.API_PATH) {
-  app.use(process.env.API_PATH, router);
-} else {
-  throw "API_PATH is not set. Remember to set it in your .env file";
-}
+// if (process.env.API_PATH) {
+//   app.use(process.env.API_PATH, router);
+// } else {
+//   throw "API_PATH is not set. Remember to set it in your .env file";
+// }
+
+app.use("/api", router);
 
 // for the frontend. Will first be covered in the react class
 app.use("*", (req, res) => {
