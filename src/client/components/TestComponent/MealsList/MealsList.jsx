@@ -20,8 +20,8 @@ const MealsList = () => {
 
   return (
     <ul>
-      {meals.map(({ Id, Title, Price }) => (
-        <MealItem key={Id} title={Title} price={Price} />
+      {meals.map((meal) => (
+        <MealItem key={meal.Id} meal={meal} />
       ))}
     </ul>
   );
