@@ -1,21 +1,31 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import TestComponent from "./components/TestComponent/TestComponent";
 import MealsList from "./components/TestComponent/MealsList/MealsList";
+import Container from "./components/Container/Container";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import Home from "./pages/Home/Home";
+import Meals from "./pages/Meals/Meals";
+import Reviews from "./pages/Reviews/Reviews";
+import { GlobalStyle } from "./GlobalStyles";
 
 function App() {
   return (
-    <Router>
-      <Route exact path="/all-meals">
-        <MealsList />
-      </Route>
-      <Route exact path="/lol">
-        <p>lol</p>
-      </Route>
-      <Route exact path="/test-component">
-        <TestComponent></TestComponent>
-      </Route>
-    </Router>
+    <>
+      <Container>
+        <Header />
+        <Switch>
+          <main>
+            <Route path="/" exact component={Home} />
+            <Route path="/meals" component={Meals} />
+            <Route path="/review" component={Reviews} />
+          </main>
+        </Switch>
+      </Container>
+      <Footer />
+      <GlobalStyle />
+    </>
   );
 }
 
