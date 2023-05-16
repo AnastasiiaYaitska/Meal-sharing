@@ -5,4 +5,5 @@ export const MainContainer = styled.div`
   padding-right: 40px;
   padding-bottom: 20px;
   padding-top: 30px;
+  /* height: 50vw; */
 `;

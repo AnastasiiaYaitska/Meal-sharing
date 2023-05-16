@@ -1,7 +1,6 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import TestComponent from "./components/TestComponent/TestComponent";
-import MealsList from "./components/TestComponent/MealsList/MealsList";
+import { Route, Switch } from "react-router-dom";
+import MainWrapperContainer from "./components/WrapperContainer/WrapperContainer";
 import Container from "./components/Container/Container";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -12,18 +11,20 @@ import { GlobalStyle } from "./GlobalStyles";
 
 function App() {
   return (
-    <>
+    <MainWrapperContainer>
       <Container>
         <Header />
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/meals" component={Meals} />
-          <Route path="/review" component={Reviews} />
-        </Switch>
+        <main>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/meals" component={Meals} />
+            <Route path="/review" component={Reviews} />
+          </Switch>
+        </main>
       </Container>
       <Footer />
       <GlobalStyle />
-    </>
+    </MainWrapperContainer>
   );
 }
 

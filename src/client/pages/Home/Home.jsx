@@ -1,13 +1,15 @@
 import React from "react";
 import Tagline from "../../components/Tagline/Tagline";
+import Gallery from "../../components/Gallery/Gallery";
+import { HomeContainer } from "./Home.styled";
 
 const Home = () => {
   return (
     <div>
-      <div>Gallery</div>
+      <Tagline />
+      <button>Try it</button>
       <div>
-        <Tagline />
-        <button>Try it</button>
+        <Gallery />
       </div>
     </div>
   );

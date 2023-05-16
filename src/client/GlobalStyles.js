@@ -37,6 +37,11 @@ export const GlobalStyle = createGlobalStyle`
   h2 {
     margin-top: 20px;
   }
+  img{
+    display: block;
+    height: 500px;
+    width: 450px;
+  }
   code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
       monospace;
