@@ -3,6 +3,10 @@ import "modern-normalize";
 // @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
 
 export const GlobalStyle = createGlobalStyle`
+#root {
+    margin-top: 100px;
+  height: 100%;
+}
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,12 +14,13 @@ export const GlobalStyle = createGlobalStyle`
       sans-serif;
         width: 100%;
         height: 100%;
-    margin-top: 100px;
+
  -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   ul{
     list-style: none;
+    height: 100%;
     margin: 0;
     padding: 0;
     display: flex;

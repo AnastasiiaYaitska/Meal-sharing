@@ -16,11 +16,9 @@ function App() {
       <Container>
         <Header />
         <Switch>
-          <main>
-            <Route path="/" exact component={Home} />
-            <Route path="/meals" component={Meals} />
-            <Route path="/review" component={Reviews} />
-          </main>
+          <Route path="/" exact component={Home} />
+          <Route path="/meals" component={Meals} />
+          <Route path="/review" component={Reviews} />
         </Switch>
       </Container>
       <Footer />

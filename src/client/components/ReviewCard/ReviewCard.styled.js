@@ -7,7 +7,7 @@ export const CardWrap = styled.div`
   align-items: center;
   gap: 15px;
   width: 300px;
-  height: 100%;
+  height: 300px;
   padding: 10px 15px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
