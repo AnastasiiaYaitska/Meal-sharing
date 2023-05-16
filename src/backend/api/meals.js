@@ -83,112 +83,123 @@ routerMeals.delete("/:id", async (req, res) => {
 routerMeals.get("/", async (req, res) => {
   try {
     const query = req.query;
-    const [keyQuery] = Object.keys(query);
-    const [valueQuery] = Object.values(query);
+    // const [keyQuery] = Object.keys(query);
+    // const [valueQuery] = Object.values(query);
+    const { maxPrice } = req.query;
+    console.log(query);
 
     if (query) {
-      switch (keyQuery) {
-        case "maxPrice": // Returns all meals that are cheaper than maxPrice
-          const maxPrice = await knex("Meal")
-            .select("Title", "Price")
-            .where("Price", "<", +valueQuery);
-          if (maxPrice.length) {
-            return res.json(maxPrice);
-          }
-          res.status(404).json({ error: "Not Found" });
-          break;
-
-        case "availableReservations": // Returns all meals that still have available spots left, if true. If false, return meals that have no available spots left.
-          const availableReservations = await knex
-            .select("Title", "status")
-            .from("Meal")
-            .where("status", "=", "available");
-          const unavailableReservations = await knex
-            .select("Title", "status")
-            .from("Meal")
-            .where("status", "=", "unavailable");
-          if (valueQuery === "true") {
-            if (availableReservations.length) {
-              return res.json(availableReservations);
-            }
-            res.status(404).json({ error: "Not Found" });
-          } else if (valueQuery === "false") {
-            if (unavailableReservations.length) {
-              return res.json(unavailableReservations);
-            }
-            res.status(404).json({ error: "Not Found" });
-          } else {
-            res.status(404).json({ error: "Not Found" });
-          }
-          break;
-
-        case "title": // Returns all meals that partially match the given title. Rød grød will match the meal with the title Rød grød med fløde
-          const title = await knex("Meal")
-            .select("Title")
-            .where("Title", "like", `%${valueQuery}%`);
-          if (title.length) {
-            return res.json(title);
-          }
-          res.status(404).json({ error: "Not Found" });
-          break;
-
-        case "dateAfter": // Returns all meals where the date for when is after the given date.
-          const dateAfter = await knex("Meal")
-            .select("Title", "date")
-            .where("date", ">", valueQuery);
-          if (dateAfter.length) {
-            return res.json(dateAfter);
-          }
-          res.status(404).json({ error: "Not Found" });
-          break;
-
-        case "dateBefore": // Returns all meals where the date for when is before the given date
-          const dateBefore = await knex("Meal")
-            .select("Title", "When")
-            .where("When", "<", valueQuery);
-          if (dateBefore.length) {
-            return res.json(dateBefore);
-          }
-          res.status(404).json({ error: "Not Found" });
-          break;
-
-        case "limit": // Returns the given number of meals.
-          const limit = await knex("Meal").select("*").limit(+valueQuery);
-          if (limit.length) {
-            return res.json(limit);
-          }
-          res.status(404).json({ error: "Not Found" });
-          break;
-
-        case "sortKey":
-          // Returns all meals sorted by the given key. Allows when, max_reservations and price as keys. Default sorting order is asc(ending).
-          // Returns all meals sorted in the given direction. Only works combined with the sortKey and allows asc or desc.
-          if (
-            !query.sortDir &&
-            (valueQuery === "Max_reservations" || valueQuery === "Price")
-          ) {
-            const sortKey = await knex("Meal")
-              .select("Title", "Max_reservations", "Price")
-              .orderBy(valueQuery);
-            return res.json(sortKey);
-          } else if (
-            (query.sortKey === "Max_reservations" ||
-              query.sortKey === "Price") &&
-            (query.sortDir === "desc" || query.sortDir === "asc")
-          ) {
-            const sortDir = await knex("Meal")
-              .select("Title", "Max_reservations", "Price")
-              .orderBy(query.sortKey, query.sortDir);
-            return res.json(sortDir);
-          } else {
-            res.status(404).json({ error: "Not Found" });
-          }
-          break;
-
-        default:
-          const allMeals = await knex("Meal").select("*");
-          res.json(allMeals);
+      if (maxPrice !== undefined) {
+        const resoult = await knex("Meal")
+          .select("Title", "Price")
+          .where("Price", "<", +maxPrice);
+        // if (maxPrice.length) {
+        //   return res.json(resoult);
+        // }
+        res.json(resoult);
       }
+      // switch (keyQuery) {
+      //   case "maxPrice": // Returns all meals that are cheaper than maxPrice
+      //     const maxPrice = await knex("Meal")
+      //       .select("Title", "Price")
+      //       .where("Price", "<", +valueQuery);
+      //     if (maxPrice.length) {
+      //       return res.json(maxPrice);
+      //     }
+      //     res.status(404).json({ error: "Not Found" });
+      //     break;
+
+      //   case "availableReservations": // Returns all meals that still have available spots left, if true. If false, return meals that have no available spots left.
+      //     const availableReservations = await knex
+      //       .select("Title", "status")
+      //       .from("Meal")
+      //       .where("status", "=", "available");
+      //     const unavailableReservations = await knex
+      //       .select("Title", "status")
+      //       .from("Meal")
+      //       .where("status", "=", "unavailable");
+      //     if (valueQuery === "true") {
+      //       if (availableReservations.length) {
+      //         return res.json(availableReservations);
+      //       }
+      //       res.status(404).json({ error: "Not Found" });
+      //     } else if (valueQuery === "false") {
+      //       if (unavailableReservations.length) {
+      //         return res.json(unavailableReservations);
+      //       }
+      //       res.status(404).json({ error: "Not Found" });
+      //     } else {
+      //       res.status(404).json({ error: "Not Found" });
+      //     }
+      //     break;
+
+      //   case "title": // Returns all meals that partially match the given title. Rød grød will match the meal with the title Rød grød med fløde
+      //     const title = await knex("Meal")
+      //       .select("Title")
+      //       .where("Title", "like", `%${valueQuery}%`);
+      //     if (title.length) {
+      //       return res.json(title);
+      //     }
+      //     res.status(404).json({ error: "Not Found" });
+      //     break;
+
+      //   case "dateAfter": // Returns all meals where the date for when is after the given date.
+      //     const dateAfter = await knex("Meal")
+      //       .select("Title", "date")
+      //       .where("date", ">", valueQuery);
+      //     if (dateAfter.length) {
+      //       return res.json(dateAfter);
+      //     }
+      //     res.status(404).json({ error: "Not Found" });
+      //     break;
+
+      //   case "dateBefore": // Returns all meals where the date for when is before the given date
+      //     const dateBefore = await knex("Meal")
+      //       .select("Title", "When")
+      //       .where("When", "<", valueQuery);
+      //     if (dateBefore.length) {
+      //       return res.json(dateBefore);
+      //     }
+      //     res.status(404).json({ error: "Not Found" });
+      //     break;
+
+      //   case "limit": // Returns the given number of meals.
+      //     const limit = await knex("Meal").select("*").limit(+valueQuery);
+      //     if (limit.length) {
+      //       return res.json(limit);
+      //     }
+      //     res.status(404).json({ error: "Not Found" });
+      //     break;
+
+      //   case "sortKey":
+      //     // Returns all meals sorted by the given key. Allows when, max_reservations and price as keys. Default sorting order is asc(ending).
+      //     // Returns all meals sorted in the given direction. Only works combined with the sortKey and allows asc or desc.
+      //     if (
+      //       !query.sortDir &&
+      //       (valueQuery === "Max_reservations" || valueQuery === "Price")
+      //     ) {
+      //       const sortKey = await knex("Meal")
+      //         .select("Title", "Max_reservations", "Price")
+      //         .orderBy(valueQuery);
+      //       return res.json(sortKey);
+      //     } else if (
+      //       (query.sortKey === "Max_reservations" ||
+      //         query.sortKey === "Price") &&
+      //       (query.sortDir === "desc" || query.sortDir === "asc")
+      //     ) {
+      //       const sortDir = await knex("Meal")
+      //         .select("Title", "Max_reservations", "Price")
+      //         .orderBy(query.sortKey, query.sortDir);
+      //       return res.json(sortDir);
+      //     } else {
+      //       res.status(404).json({ error: "Not Found" });
+      //     }
+      //     break;
+
+      //   default:
+      //     const allMeals = await knex("Meal").select("*");
+      //     res.json(allMeals);
+      // }
     }
   } catch (error) {
     throw error;
