@@ -96,13 +96,15 @@ routerMeals.get("/", async (req, res) => {
 
     console.log(query);
 
+    let meals_result = [];
+
     if (query) {
       // Returns all meals that are cheaper than maxPrice
       if (maxPrice !== undefined) {
         const result = await knex("Meal")
           .select("*")
           .where("Price", "<=", +maxPrice);
-        res.json(result);
+        meals_result.push(result);
       }
 
       // Returns all meals that still have available spots left, if true. If false, return meals that have no available spots left.
@@ -115,7 +117,7 @@ routerMeals.get("/", async (req, res) => {
             "(SELECT SUM(Number_of_guests) FROM Reservation WHERE Meal_id = Meal.Id)"
           )
         );
-        res.json(result);
+        meals_result.push(result);
       }
 
       // Returns all meals that partially match the given title. Rød grød will match the meal with the title Rød grød med fløde
@@ -123,8 +125,8 @@ routerMeals.get("/", async (req, res) => {
         console.log("title !== undefined");
         const result = await knex("Meal")
           .select("*")
-          .where("Title", "like", `%{title}%`);
-        res.json(result);
+          .where("Title", "like", `%${title}%`);
+        meals_result.push(result);
       }
 
       // Returns all meals where the date for when is after the given date.
@@ -132,7 +134,7 @@ routerMeals.get("/", async (req, res) => {
         const result = await knex("Meal")
           .select("*")
           .where("When", ">", dateAfter);
-        res.json(result);
+        meals_result.push(result);
       }
 
       // Returns all meals where the date for when is before the given date
@@ -140,13 +142,13 @@ routerMeals.get("/", async (req, res) => {
         const result = await knex("Meal")
           .select("*")
           .where("When", "<", dateBefore);
-        res.json(result);
+        meals_result.push(result);
       }
 
       // Returns the given number of meals.
       if (limit) {
         const result = await knex("Meal").select("*").limit(limit);
-        res.json(result);
+        meals_result.push(result);
       }
 
       // Apply sorting
@@ -155,13 +157,16 @@ routerMeals.get("/", async (req, res) => {
         const result = await knex("Meal")
           .select("*")
           .orderBy(sortKey, direction);
-        res.json(result);
+        meals_result.push(result);
       }
+      console.log(meals_result);
+      res.json(meals_result);
+    } else {
+      const allMeals = await knex("Meal").select("*");
+      res.json(allMeals);
     }
-
-    const allMeals = await knex("Meal").select("*");
-    res.json(allMeals);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "An error occurred" });
   }
 });
