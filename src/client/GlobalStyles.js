@@ -4,7 +4,7 @@ import "modern-normalize";
 
 export const GlobalStyle = createGlobalStyle`
 #root {
-    margin-top: 100px;
+    margin-top: 85px;
   height: 100%;
 }
   body {
@@ -32,7 +32,8 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
   h1  {
-  margin-top  :40px ;
+  margin-top  :30px ;
+  margin-bottom: 30px;
   }
   h2 {
     margin-top: 20px;

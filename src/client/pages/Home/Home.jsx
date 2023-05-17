@@ -1,17 +1,20 @@
 import React from "react";
 import Tagline from "../../components/Tagline/Tagline";
 import Gallery from "../../components/Gallery/Gallery";
-import { HomeContainer } from "./Home.styled";
+import ButtonOnHomePage from "../../components/ButtonOnHomePage/ButtonOnHomePage";
+import { HomeContainer, TaglineWrap } from "./Home.styled";
 
 const Home = () => {
   return (
-    <div>
-      <Tagline />
-      <button>Try it</button>
+    <HomeContainer>
+      <TaglineWrap>
+        <Tagline />
+        <ButtonOnHomePage />
+      </TaglineWrap>
       <div>
         <Gallery />
       </div>
-    </div>
+    </HomeContainer>
   );
 };
 

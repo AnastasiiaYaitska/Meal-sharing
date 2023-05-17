@@ -1,7 +1,8 @@
 import React from "react";
+import { Title } from "./Tagline.styled";
 
 const Tagline = () => {
-  return <h1>Once you try it, you will love it...</h1>;
+  return <Title>Once you try it, you will love it ...</Title>;
 };
 
 export default Tagline;
