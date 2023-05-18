@@ -6,7 +6,7 @@ export const Backdrop = styled(Box)`
   position: fixed;
   top: 50%;
   left: 50%;
-  z-index: 100;
+  z-index: 110;
   transform: translate(-50%, -50%);
   width: 400px;
 `;

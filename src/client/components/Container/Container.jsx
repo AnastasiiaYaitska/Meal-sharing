@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { MainContainer } from "./Container.styled";
+import { ContainerStyled } from "./Container.styled";
 
 const Container = ({ children }) => {
-  return <MainContainer>{children}</MainContainer>;
+  return <ContainerStyled>{children}</ContainerStyled>;
 };
 
 Container.propTypes = {

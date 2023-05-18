@@ -2,8 +2,9 @@ import React from "react";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
+import { Backdrop } from "./FormsModal.styled";
 
-const AddMealModal = () => {
+const FormsModal = ({ children, buttonText }) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -15,8 +16,8 @@ const AddMealModal = () => {
 
   return (
     <>
-      <Button onClick={handleOpen} color="primary" variant="contained">
-        Add New Contact
+      <Button onClick={handleOpen} color="warning" variant="contained">
+        {buttonText}
       </Button>
       <Modal
         open={open}
@@ -24,10 +25,10 @@ const AddMealModal = () => {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Backdrop>{/* <AddContactsForm onClose={handleClose} /> */}</Backdrop>
+        <Backdrop>{children(handleClose)}</Backdrop>
       </Modal>
     </>
   );
 };
 
-export default AddMealModal;
+export default FormsModal;
