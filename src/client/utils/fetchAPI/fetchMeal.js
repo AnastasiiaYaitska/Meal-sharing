@@ -13,8 +13,7 @@ export const fetchAllMeals = async () => {
 export const fetchMealById = async (id) => {
   try {
     const { data } = await axios.get(`/meals/${id}`);
-    console.log(data);
-    return data;
+    return data[0];
   } catch (error) {
     console.log(error.massage);
   }
