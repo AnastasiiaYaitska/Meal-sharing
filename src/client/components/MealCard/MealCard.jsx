@@ -1,5 +1,7 @@
 import React from "react";
 
-const MealCard = () => {};
+const MealCard = () => {
+  return <div>card</div>;
+};
 
 export default MealCard;

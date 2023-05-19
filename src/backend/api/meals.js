@@ -12,9 +12,6 @@ routerMeals.get("/", async (req, res) => {
       .leftJoin("Reservation", "Meal.Id", "=", "Reservation.Meal_id")
       .groupBy("Meal.Id");
 
-    // if (!allMeals.length) {
-    //   res.status(404).json({ error: "That shit doesn’t exist." });
-    // }
     res.json(allMeals);
   } catch (error) {
     res.status(500).json({
@@ -23,19 +20,19 @@ routerMeals.get("/", async (req, res) => {
   }
 });
 
-// knex("dishes")
-//   .select("d.*", knex.raw("COUNT(r.id) AS reservations"))
-//   .leftJoin("reservations AS r", "d.id", "=", "r.dish_id")
-//   .groupBy("d.id");
-
 routerMeals.get("/:id", async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    const mealId = await knex("Meal").select("*").where("Id", "=", id);
-    if (!mealId.length) {
-      res.status(404).json({ error: "That shit doesn’t exist" });
-    }
-    res.json(mealId);
+    const meal = await knex("Meal")
+      .select(
+        "Meal.*",
+        knex.raw("SUM(Reservation.Number_of_guests) AS Total_reservations")
+      )
+      .leftJoin("Reservation", "Meal.Id", "=", "Reservation.Meal_id")
+      .groupBy("Meal.Id")
+      .where("Meal.Id", id);
+
+    res.json(meal);
   } catch (error) {
     res.status(500).json({
       error: "Error while looking for the meal",

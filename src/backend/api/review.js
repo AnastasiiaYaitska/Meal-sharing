@@ -4,7 +4,10 @@ const knex = require("../database");
 
 routerReviews.get("/", async (req, res) => {
   try {
-    const allReservations = await knex("Review").select("*");
+    const allReservations = await knex("Review")
+      .select("Review.*", knex.raw("Meal.Title AS Meal_title"))
+      .leftJoin("Meal", "Review.Meal_id", "=", "Meal.Id")
+      .groupBy("Review.Id");
     if (!allReservations.length) {
       res.status(404).json({ error: "That shit doesn’t exist." });
     }
@@ -15,8 +18,6 @@ routerReviews.get("/", async (req, res) => {
     });
   }
 });
-
-
 
 routerReviews.get("/:Id", async (req, res) => {
   try {

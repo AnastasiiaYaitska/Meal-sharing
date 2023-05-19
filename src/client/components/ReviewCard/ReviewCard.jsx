@@ -5,7 +5,7 @@ import { CardWrap, StyledStar, SpanDate } from "./ReviewCard.styled";
 // import { AiOutlineStar } from "react-icons/ai";
 
 const ReviewCard = ({ review }) => {
-  const { Title, Description, Meal_id, Stars, Created_date } = review;
+  const { Title, Description, Stars, Created_date, Meal_title } = review;
   let startsArr = [];
 
   for (let index = 1; index <= Stars; index++) {
@@ -14,7 +14,7 @@ const ReviewCard = ({ review }) => {
 
   return (
     <CardWrap>
-      <h3>{Meal_id}</h3>
+      <h3>{Meal_title}</h3>
       <SpanDate>
         <FcCalendar />
         {normalizeDate(Created_date)}
