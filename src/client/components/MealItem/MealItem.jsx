@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import { normalizeDateTime } from "../../utils/normalizeDate";
 import Button from "@mui/material/Button";
-import { Img } from "./MealIem.styled";
+import { Img } from "./MealItem.styled";
 
-const MealItem = ({ meal }) => {
+const MealItem = ({ meal, to, location }) => {
   const [expanded, setExpanded] = useState(false);
   const {
     Id,
@@ -48,7 +48,12 @@ const MealItem = ({ meal }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Link to={Id}>Learn More</Link>
+        <NavLink
+          to={`meals/${Id}`}
+          // state={{ from: location }}
+        >
+          Read More
+        </NavLink>
       </CardActions>
     </Card>
   );

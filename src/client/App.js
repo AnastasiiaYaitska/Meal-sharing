@@ -6,6 +6,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
 import Meals from "./pages/Meals/Meals";
+import MealDetails from "./pages/MealDetails/MealDetails";
 import Reviews from "./pages/Reviews/Reviews";
 import { GlobalStyle } from "./GlobalStyles";
 
@@ -17,8 +18,9 @@ function App() {
         <main>
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/meals" component={Meals} />
-            <Route path="/review" component={Reviews} />
+            <Route path="/meals" exact component={Meals} />
+            <Route path="/meals/:id" exact component={MealDetails} />
+            <Route path="/review" exact component={Reviews} />
           </Switch>
         </main>
       </Container>

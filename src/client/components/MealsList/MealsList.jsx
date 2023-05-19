@@ -3,7 +3,7 @@ import { fetchAllMeals } from "../../utils/fetchAPI/fetchMeal";
 import MealItem from "../MealItem/MealItem";
 import { LiStyled, UlStyled } from "./MealsList.styled";
 
-const MealsList = ({ meals, to, location }) => {
+const MealsList = ({ meals }) => {
   return (
     <UlStyled>
       {meals.map((meal) => (
