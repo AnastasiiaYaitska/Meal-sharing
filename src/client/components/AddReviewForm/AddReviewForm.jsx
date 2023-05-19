@@ -1,7 +1,7 @@
 import React from "react";
 import * as yup from "yup";
 import { Formik, Form, Field } from "formik";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import FormTextFieldWrapper from "../FormTextFieldWrapper/FormTextFieldWrapper";
 import FormButtonWrap from "../FormButtonWrap/FormButtonWrap";
 import StarVoting from "../StarVoting/StarVoting";
@@ -49,7 +49,12 @@ const AddReviewForm = ({ handleClose, mealId }) => {
                 rows={4}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
+              <Typography variant="subtitle1">
+                Rate the dish from 1-5:
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
               <FormTextFieldWrapper name="Stars" as={StarVoting} label="Star" />
             </Grid>
             <Grid item xs={12}>

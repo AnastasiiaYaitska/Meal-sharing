@@ -2,21 +2,19 @@ const express = require("express");
 const routerMeals = express.Router();
 const knex = require("../database");
 
-// router.get("/", async (request, response) => {
-//   try {
-//     // knex syntax for selecting things. Look up the documentation for knex for further info
-//     const titles = await knex("Meals").select("Title");
-//     response.json(titles);
-//   } catch (error) {
-//     throw error;
-//   }
-// });
 routerMeals.get("/", async (req, res) => {
   try {
-    const allMeals = await knex("Meal").select("*");
-    if (!allMeals.length) {
-      res.status(404).json({ error: "That shit doesn’t exist." });
-    }
+    const allMeals = await knex("Meal")
+      .select(
+        "Meal.*",
+        knex.raw("SUM(Reservation.Number_of_guests) AS Total_reservations")
+      )
+      .leftJoin("Reservation", "Meal.Id", "=", "Reservation.Meal_id")
+      .groupBy("Meal.Id");
+
+    // if (!allMeals.length) {
+    //   res.status(404).json({ error: "That shit doesn’t exist." });
+    // }
     res.json(allMeals);
   } catch (error) {
     res.status(500).json({
@@ -24,6 +22,11 @@ routerMeals.get("/", async (req, res) => {
     });
   }
 });
+
+// knex("dishes")
+//   .select("d.*", knex.raw("COUNT(r.id) AS reservations"))
+//   .leftJoin("reservations AS r", "d.id", "=", "r.dish_id")
+//   .groupBy("d.id");
 
 routerMeals.get("/:id", async (req, res) => {
   try {

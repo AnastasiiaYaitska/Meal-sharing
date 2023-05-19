@@ -6,6 +6,6 @@ export const StyledStar = styled(AiFillStar)`
   fill: ${(prop) => {
     return prop.star <= prop.rating ? "rgba(245, 206, 39, 0.8)" : "grey";
   }};
-  height: 20px;
-  width: 20px;
+  height: 25px;
+  width: 25px;
 `;
