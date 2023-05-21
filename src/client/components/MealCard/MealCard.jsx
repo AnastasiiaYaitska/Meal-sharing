@@ -1,5 +1,11 @@
 import React from "react";
 import { normalizeDate, normalizeDateTime } from "../../utils/normalizeDate";
+import FormsModal from "../FormsModal/FormsModal";
+import AddReservationForm from "../AddReservationForm/AddReservationForm";
+import AddReviewForm from "../AddReviewForm/AddReviewForm";
+import { Reviews } from "@mui/icons-material";
+import MealCartButtons from "../MealCardButtons/MealCardButtons";
+import { CardContainer, CardWrap } from "./MealCard.styled";
 
 const MealCard = ({ url, meal }) => {
   const {
@@ -16,19 +22,20 @@ const MealCard = ({ url, meal }) => {
   const availableSlot = Max_reservations - Total_reservations;
 
   return (
-    <div>
+    <CardContainer>
       <div>
         <img src={url} alt="" />
       </div>
-      <div>
+      <CardWrap>
         <h2>{Title}</h2>
         <h3>Can be pick up: {normalizeDateTime(When)}</h3>
         <p>Located: {Location}</p>
         <p>{Description}</p>
-        <p>Price : {Price}</p>
+        <p>Price : {Price} kr</p>
         <p>Available place: {availableSlot <= 0 ? 0 : availableSlot}</p>
-      </div>
-    </div>
+        <MealCartButtons availablePlace={availableSlot} mealId={Id} />
+      </CardWrap>
+    </CardContainer>
   );
 };
 
