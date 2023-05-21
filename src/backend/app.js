@@ -7,6 +7,7 @@ const path = require("path");
 const knex = require("./database");
 const mealsRouter = require("./api/meals");
 const routerReviews = require("./api/review");
+const routerReservation = require("./api/reservations");
 // const reservationsRouter = require("./api/reservations");
 const buildPath = path.join(__dirname, "../../dist");
 const port = process.env.PORT || 3000;
@@ -25,9 +26,7 @@ app.use(cors());
 
 router.use("/meals", mealsRouter);
 router.use("/review", routerReviews);
-
-///
-// router.use("/reservations", reservationsRouter);
+router.use("/reservations", routerReservation);
 
 router.get("/:type", cors(), async (req, res) => {
   const { type } = req.params;
