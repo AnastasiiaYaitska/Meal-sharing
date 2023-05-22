@@ -7,6 +7,7 @@ import SelectWrapper from "../SelectWrapper/SelectWrapper";
 import FormButtonWrap from "../FormButtonWrap/FormButtonWrap";
 import { normalizeDate } from "../../utils/normalizeDate";
 import { FormContainer } from "./AddReservationForm.styled";
+import { addReservation } from "../../utils/fetchAPI/fetchReservations";
 
 const AddReservationForm = ({ handleClose, availablePlace, mealId }) => {
   const initialValues = {
@@ -30,11 +31,12 @@ const AddReservationForm = ({ handleClose, availablePlace, mealId }) => {
   const handlerSubmit = (values, actions) => {
     const { Number_of_guests, ...otherValues } = values;
     const normalizeValue = {
-      ...values,
+      ...otherValues,
       Max_reservations: +Number_of_guests,
       Created_date: normalizeDate(new Date()),
       Meal_id: mealId,
     };
+    addReservation(normalizeValue);
     console.log(normalizeValue);
     //    addMeal(normalizeValue);
     //    //need add notification of successful

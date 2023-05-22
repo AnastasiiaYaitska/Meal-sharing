@@ -19,7 +19,7 @@ const MealItem = ({ meal }) => {
   const availableSlot = Max_reservations - Total_reservations;
 
   return (
-    <Card sx={{ boxShadow: 3, width: 2 / 2 }}>
+    <Card sx={{ boxShadow: 3, width: 2 / 2, height: 2 / 2 }}>
       <Img
         src="https://i.pinimg.com/originals/5e/70/67/5e7067c21fdab0ae703533adf3b41958.jpg"
         alt=""

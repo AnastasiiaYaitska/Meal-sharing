@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
-
+import {
+  useLocation,
+  useParams,
+} from "react-router-dom/cjs/react-router-dom.min";
+import FilterBar from "../../components/FilterBar/FilterBar";
 import FormsModal from "../../components/FormsModal/FormsModal";
 import AddMealForm from "../../components/AddMealForm/AddMealForm";
 import MealsList from "../../components/MealsList/MealsList";
@@ -13,6 +16,9 @@ const Meals = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
+  const { title } = useParams();
+  console.dir(title);
+
   // const [searchParams, setSearchParams] = useSearchParams();
   console.log(location);
   const match = matchPath(`/meals/`, {
@@ -43,6 +49,7 @@ const Meals = () => {
       <FormsModal buttonText="Add New Meal">
         {(handleClose) => <AddMealForm handleClose={handleClose} />}
       </FormsModal>
+      {/* <FilterBar /> */}
       <MealsList
         meals={allMeals}
         // to={(Id) => `/${Id}`}

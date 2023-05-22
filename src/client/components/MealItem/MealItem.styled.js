@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
+import CardContent from "@mui/material/CardContent";
 
 export const Img = styled.img`
   width: 100px;
@@ -17,4 +18,8 @@ export const DetailsButton = styled(NavLink)`
   &:focus {
     color: orangered;
   }
+`;
+
+export const ItemContainer = styled(CardContent)`
+  height: 100%;
 `;

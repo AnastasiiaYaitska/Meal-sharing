@@ -1,11 +1,13 @@
 import React from "react";
 import * as yup from "yup";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { Grid, Typography } from "@mui/material";
 import FormTextFieldWrapper from "../FormTextFieldWrapper/FormTextFieldWrapper";
 import FormButtonWrap from "../FormButtonWrap/FormButtonWrap";
 import StarVoting from "../StarVoting/StarVoting";
 import { FormContainer } from "./AddReviewForm.styled";
+import { normalizeDate } from "../../utils/normalizeDate";
+import { addReview } from "../../utils/fetchAPI/fetchReview";
 
 const AddReviewForm = ({ handleClose, mealId }) => {
   const initialValues = {
@@ -13,8 +15,8 @@ const AddReviewForm = ({ handleClose, mealId }) => {
     Description: "",
     Stars: "", //number
 
-    Meal_id: "", //number
-    Created_date: new Date(), //2023-03-09
+    // Meal_id: "", //number
+    // Created_date: new Date(), //2023-03-09
   };
 
   const schema = yup.object().shape({
@@ -24,6 +26,15 @@ const AddReviewForm = ({ handleClose, mealId }) => {
   });
 
   const handlerSubmit = (values, actions) => {
+    const { Title, Description, Stars } = values;
+    const normalizeValue = {
+      Title,
+      Description,
+      Stars: +Stars,
+      Meal_id: mealId,
+      Created_date: normalizeDate(new Date()),
+    };
+    addReview(normalizeValue);
     console.log(values);
     actions.resetForm();
     handleClose();

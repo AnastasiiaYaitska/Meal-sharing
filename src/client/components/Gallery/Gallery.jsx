@@ -17,7 +17,7 @@ const Gallery = () => {
       <Slider {...settings}>
         {pictures.map(({ url }) => {
           return (
-            <div>
+            <div key={url}>
               <img src={url} alt="meal photo" />
             </div>
           );
