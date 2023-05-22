@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import { normalizeDateTime } from "../../utils/normalizeDate";
-import Button from "@mui/material/Button";
-import { Img } from "./MealItem.styled";
+import { Img, DetailsButton } from "./MealItem.styled";
 
-const MealItem = ({ meal, to, location }) => {
-  const [expanded, setExpanded] = useState(false);
+const MealItem = ({ meal }) => {
   const {
     Id,
     Title,
@@ -20,10 +17,6 @@ const MealItem = ({ meal, to, location }) => {
   } = meal;
 
   const availableSlot = Max_reservations - Total_reservations;
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   return (
     <Card sx={{ boxShadow: 3, width: 2 / 2 }}>
@@ -48,12 +41,7 @@ const MealItem = ({ meal, to, location }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <NavLink
-          to={`meals/${Id}`}
-          // state={{ from: location }}
-        >
-          Read More
-        </NavLink>
+        <DetailsButton to={`meals/${Id}`}>Read More</DetailsButton>
       </CardActions>
     </Card>
   );
