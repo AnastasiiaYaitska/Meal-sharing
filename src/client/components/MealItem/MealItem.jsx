@@ -1,103 +1,50 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+import { normalizeDateTime } from "../../utils/normalizeDate";
+import { Img, DetailsButton } from "./MealItem.styled";
 
 const MealItem = ({ meal }) => {
-  const [expanded, setExpanded] = React.useState(false);
-  const { Title, Description, Location, Price, Max_reservations, When } = meal;
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  const {
+    Id,
+    Title,
+    Price,
+    Max_reservations,
+    When,
+    Total_reservations = Total_reservations === null ? 0 : Total_reservations,
+  } = meal;
+
+  const availableSlot = Max_reservations - Total_reservations;
 
   return (
-    <li>
-      <Card sx={{ maxWidth: 345 }}>
-        <CardHeader
-          // avatar={
-          //   <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-          //     R
-          //   </Avatar>
-          // }
-          action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          }
-          title={Title}
-          subheader={When}
-        />
-        <CardMedia
-          component="img"
-          height="194"
-          image="/static/images/cards/paella.jpg"
-          alt="Paella dish"
-        />
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            Price:{Price}
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>Description:</Typography>
-            {/* <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and
-            set aside for 10 minutes.
-          </Typography> */}
-            <Typography paragraph>{Description}</Typography>
-          </CardContent>
-        </Collapse>
-      </Card>
-    </li>
+    <Card sx={{ boxShadow: 3, width: 2 / 2, height: 2 / 2 }}>
+      <Img
+        src="https://i.pinimg.com/originals/5e/70/67/5e7067c21fdab0ae703533adf3b41958.jpg"
+        alt=""
+        width={50}
+        height="30px"
+      />
+      <CardContent>
+        <Typography variant="h5" component="div">
+          {Title}
+        </Typography>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          {normalizeDateTime(When)}
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          Price: {Price} kr
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          Available reservations: {availableSlot <= 0 ? 0 : availableSlot}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <DetailsButton to={`meals/${Id}`}>Read More</DetailsButton>
+      </CardActions>
+    </Card>
   );
 };
-
-// const MealItem = ({ title, price }) => {
-//   return (
-//     <li>
-//       <p>{title}</p> <p>{price}</p>
-//     </li>
-//   );
-// };
 
 export default MealItem;
