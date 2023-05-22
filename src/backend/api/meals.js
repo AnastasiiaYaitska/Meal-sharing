@@ -100,7 +100,8 @@ routerMeals.get("/", async (req, res) => {
     console.log(query);
 
     let meals_result = [];
-    if (query.length > 0) {
+    if (Object.keys(query).length > 0) {
+      console.log("Hi");
       // Returns all meals that are cheaper than maxPrice
       if (maxPrice !== undefined) {
         const result = await knex("Meal")
@@ -124,7 +125,6 @@ routerMeals.get("/", async (req, res) => {
 
       // Returns all meals that partially match the given title. Rød grød will match the meal with the title Rød grød med fløde
       if (title) {
-        console.log("title !== undefined");
         const result = await knex("Meal")
           .select("*")
           .where("Title", "like", `%${title}%`);
