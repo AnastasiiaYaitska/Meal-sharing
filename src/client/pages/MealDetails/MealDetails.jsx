@@ -16,8 +16,6 @@ const MealDetails = () => {
   const { id } = useParams();
   const location = useLocation();
   const goBackRef = useRef(location.state?.from ?? "/meals");
-  console.log(location);
-  console.log(goBackRef);
 
   useEffect(() => {
     setIsLoading(true);
@@ -43,7 +41,7 @@ const MealDetails = () => {
   return (
     <>
       <GoBackArrow goBackRef={goBackRef.current} />
-      <MealCard url={pictureUrl.image} meal={meal} />
+      <MealCard url={pictureUrl?.image} meal={meal} />
     </>
   );
 };
