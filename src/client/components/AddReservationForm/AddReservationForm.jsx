@@ -32,14 +32,12 @@ const AddReservationForm = ({ handleClose, availablePlace, mealId }) => {
     const { Number_of_guests, ...otherValues } = values;
     const normalizeValue = {
       ...otherValues,
-      Max_reservations: +Number_of_guests,
+      Number_of_guests: +Number_of_guests,
       Created_date: normalizeDate(new Date()),
       Meal_id: mealId,
     };
     addReservation(normalizeValue);
     console.log(normalizeValue);
-    //    addMeal(normalizeValue);
-    //    //need add notification of successful
     console.log(values);
     actions.resetForm();
     handleClose();
@@ -87,12 +85,3 @@ const AddReservationForm = ({ handleClose, availablePlace, mealId }) => {
 };
 
 export default AddReservationForm;
-
-//    "Id": 1,
-//         "Number_of_guests": 4,
-//         "Meal_id": 1,
-//         "Created_date": "2023-02-28T23:00:00.000Z",
-//         "Contact_phonenumber": "+45 50 20 20 20",
-//         "Contact_name": "Lili",
-//         "Contact_email": "lili.lili@gmail.com"
-//     },

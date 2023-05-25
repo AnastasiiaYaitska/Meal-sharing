@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as yup from "yup";
 import { Formik, Form } from "formik";
 import { Grid, Typography } from "@mui/material";
@@ -10,13 +10,12 @@ import { normalizeDate } from "../../utils/normalizeDate";
 import { addReview } from "../../utils/fetchAPI/fetchReview";
 
 const AddReviewForm = ({ handleClose, mealId }) => {
+  const [rating, setRating] = useState(1);
+
   const initialValues = {
     Title: "",
     Description: "",
-    Stars: "", //number
-
-    // Meal_id: "", //number
-    // Created_date: new Date(), //2023-03-09
+    Stars: rating, //number
   };
 
   const schema = yup.object().shape({
@@ -26,16 +25,17 @@ const AddReviewForm = ({ handleClose, mealId }) => {
   });
 
   const handlerSubmit = (values, actions) => {
-    const { Title, Description, Stars } = values;
+    console.log("Submit fun");
+    const { Title, Description } = values;
     const normalizeValue = {
       Title,
       Description,
-      Stars: +Stars,
+      Stars: +rating,
       Meal_id: mealId,
       Created_date: normalizeDate(new Date()),
     };
     addReview(normalizeValue);
-    console.log(values);
+    console.log(values, normalizeValue);
     actions.resetForm();
     handleClose();
   };
@@ -66,7 +66,8 @@ const AddReviewForm = ({ handleClose, mealId }) => {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <FormTextFieldWrapper name="Stars" as={StarVoting} label="Star" />
+              <StarVoting rating={rating} setRating={setRating} />
+              {/* <FormTextFieldWrapper name="Stars" as={StarVoting} label="Star" /> */}
             </Grid>
             <Grid item xs={12}>
               <FormButtonWrap>Add Review</FormButtonWrap>
