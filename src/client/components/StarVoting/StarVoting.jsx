@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyledStar } from "./StarVoting.styled";
 
-const StarVoting = () => {
-  const [rating, setRating] = useState(0);
-
+const StarVoting = ({ setRating, rating }) => {
   const handleStarClick = (selectedRating) => {
     setRating(selectedRating);
   };
